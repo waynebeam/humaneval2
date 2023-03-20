@@ -10,28 +10,58 @@ let barHeight = 0;
 let barSpeed = .25;
 let prevTime;
 
+const buttonsContainer = document.getElementById('buttons-container');
+const buttons = [
+    {
+        description: "White is winning!",
+        eval: 1,
+    },
+    {
+        description: "White is much better",
+        eval: .75,
+    },
+    {
+        description: "White is better",
+        eval: .5,
+    },
+    {
+        description: "White is slightly better",
+        eval: .25,
+    },
+    {
+        description: "Equal",
+        eval: 0,
+    },
+    {
+        description: "Black is slightly better",
+        eval: -.25,
+    },
+    {
+        description: "Black is better",
+        eval: -.5,
+    },
+    {
+        description: "Black is much better",
+        eval: -.75,
+    },
+    {
+        description: "Black is winning!",
+        eval: -1,
+    },
+   
+   
+];
 
-const button1 = document.getElementById('-1');
-const button2 = document.getElementById('-.5');
-const button3 = document.getElementById('0');
-const button4 = document.getElementById('.5');
-const button5 = document.getElementById('1');
+function wireUpButtons(){
+    buttons.forEach(btnData => {
+        let btn = document.createElement('button');
+        btn.innerHTML = btnData.description;
+        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        buttonsContainer.appendChild(btn);
+    })
+}
 
-button1.addEventListener('click', function(){
-   changeEval(-1);
-})
-button2.addEventListener('click', function(){
-    changeEval(-.5);
-})
-button3.addEventListener('click', function(){
-    changeEval(0);
-})
-button4.addEventListener('click', function(){
-    changeEval(.5);
-})
-button5.addEventListener('click', function(){
-    changeEval(1);
-})
+
 
 function drawBar(elapsedMs){
 
@@ -59,4 +89,5 @@ function changeEval(newEval) {
     drawBar();
 }
 
+wireUpButtons();
 changeEval(0);
