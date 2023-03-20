@@ -10,8 +10,10 @@ let barHeight = 0;
 let barSpeed = .25;
 let prevTime;
 
-const buttonsContainer = document.getElementById('buttons-container');
-const buttons = [
+const whiteButtonsContainer = document.getElementById('white-buttons-container');
+const blackButtonsContainer = document.getElementById('black-buttons-container');
+const sharedButtonsContainer = document.getElementById('shared-buttons-container');
+const whiteButtons = [
     {
         description: "White is winning!",
         eval: 1,
@@ -28,10 +30,9 @@ const buttons = [
         description: "White is slightly better",
         eval: .25,
     },
-    {
-        description: "Equal",
-        eval: 0,
-    },
+];
+const blackButtons = [
+ 
     {
         description: "Black is slightly better",
         eval: -.25,
@@ -49,15 +50,32 @@ const buttons = [
         eval: -1,
     },
    
-   
-];
+]
+const sharedButtons = [
+    {
+        description: "Equal",
+        eval: 0,
+    },
+]
 
 function wireUpButtons(){
-    buttons.forEach(btnData => {
+    whiteButtons.forEach(btnData => {
         let btn = document.createElement('button');
         btn.innerHTML = btnData.description;
         btn.addEventListener('click', ()=>changeEval(btnData.eval));
-        buttonsContainer.appendChild(btn);
+        whiteButtonsContainer.appendChild(btn);
+    })
+    blackButtons.forEach(btnData => {
+        let btn = document.createElement('button');
+        btn.innerHTML = btnData.description;
+        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        blackButtonsContainer.appendChild(btn);
+    })
+    sharedButtons.forEach(btnData => {
+        let btn = document.createElement('button');
+        btn.innerHTML = btnData.description;
+        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        sharedButtonsContainer.appendChild(btn);
     })
 }
 
