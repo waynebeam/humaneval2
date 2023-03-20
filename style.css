@@ -1,0 +1,22 @@
+body {
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+}
+
+#main-container {
+    background-color: black;
+    margin: 0 auto;
+    display: flex;
+
+}
+
+#canvas1 {
+    background: white;
+}
+
+#buttons-container {
+    background-color: rgb(65, 63, 63);
+    flex: 1;
+
+}
