@@ -10,12 +10,13 @@ let barHeight = 0;
 let barWidth = canvas.width * .4;
 let barX = (canvas.width - barWidth)/2;
 let barSpeed = 5;
-let prevTime;
+let prevTime = 0;
 let floatHeight = 5;
 let isTextScrolling = false;
 let currentButton;
 let currentEvalText;
 let textScrollX = 0;
+let textSpeed = canvas.height/4;
 
 const whiteButtonsContainer = document.getElementById('white-buttons-container');
 const blackButtonsContainer = document.getElementById('black-buttons-container');
@@ -93,11 +94,13 @@ function wireUpButtons(){
 
 
 
-function drawBar(dt){
+function drawBar(elapsedMs){
 
     
     //console.log("elapsedMS",elapsedMs);
     // console.log("dt", dt);
+
+    let dt = elapsedMs - prevTime;
 
     let distance = targetBarHeight - barHeight;
     if(Math.abs(distance) > floatHeight){
@@ -105,7 +108,7 @@ function drawBar(dt){
     }
     else
     {
-        barHeight = targetBarHeight + Math.sin(dt/500) * floatHeight;
+        barHeight = targetBarHeight + Math.sin(elapsedMs/500) * floatHeight;
     }
     ctx.clearRect(0,0, canvas.width,canvas.height);
     ctx.fillStyle = 'white';
@@ -116,11 +119,12 @@ function drawBar(dt){
     ctx.moveTo(0, barMiddleHeight);
     ctx.lineTo(canvas.width, barMiddleHeight);
     ctx.strokeStyle = 'salmon';
-    ctx.lineWidth = '3';
+    ctx.lineWidth = '5';
     ctx.stroke();
 
     drawText(dt);
 
+    prevTime = elapsedMs;
     requestAnimationFrame(drawBar);
 
 }
@@ -132,7 +136,7 @@ function drawText(dt)
         let originY = 0;
         let rotation = 0;
         let startX = -canvas.height;
-        textScrollX += barSpeed * .1; 
+        textScrollX += textSpeed * dt/1000; 
         if(textScrollX > canvas.height * 2){
             textScrollX = 0;
         }  
@@ -150,6 +154,7 @@ function drawText(dt)
             originY = barMiddleHeight;
             rotation = Math.PI * .5;
         }
+        
         ctx.translate(originX, originY);
         ctx.rotate(rotation);
         ctx.fillText(currentEvalText, startX + textScrollX,0);
@@ -164,8 +169,8 @@ function changeEval(evalData) {
     targetBarHeight = barMiddleHeight - (barMiddleHeight * eval);
     isTextScrolling = true;
     textScrollX = 0;
-    drawBar();
 }
 
 wireUpButtons();
 changeEval(sharedButtons[0]);
+drawBar();
