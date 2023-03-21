@@ -68,27 +68,46 @@ const sharedButtons = [
 
 function wireUpButtons(){
     whiteButtons.forEach(btnData => {
+        let btnsDiv = document.createElement('div');
+        btnsDiv.classList.add('eval-btn-div');
         let btn = document.createElement('button');
+        let renameBtn = document.createElement('button');
+        renameBtn.innerHTML = 'rename';
+        btnsDiv.appendChild(btn);
+        btnsDiv.append(renameBtn);
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
+        renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
-        whiteButtonsContainer.appendChild(btn);
+        whiteButtonsContainer.appendChild(btnsDiv);
     })
     blackButtons.forEach(btnData => {
+        let btnsDiv = document.createElement('div');
+        btnsDiv.classList.add('eval-btn-div');
         let btn = document.createElement('button');
+        let renameBtn = document.createElement('button');
+        renameBtn.innerHTML = 'rename';
+        btnsDiv.appendChild(btn);
+        btnsDiv.append(renameBtn);
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
-
+        renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
-        blackButtonsContainer.appendChild(btn);
+        blackButtonsContainer.appendChild(btnsDiv);
     })
     sharedButtons.forEach(btnData => {
+        let btnsDiv = document.createElement('div');
+        btnsDiv.classList.add('eval-btn-div');
         let btn = document.createElement('button');
+        let renameBtn = document.createElement('button');
+        renameBtn.innerHTML = 'rename';
+        btnsDiv.appendChild(btn);
+        btnsDiv.append(renameBtn);
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
-
+        renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
-        sharedButtonsContainer.appendChild(btn);
+        sharedButtonsContainer.appendChild(btnsDiv);
     })
 }
 

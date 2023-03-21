@@ -35,5 +35,13 @@ body {
 }
 
 .button {
-    margin: 10px 0px;
+    margin: 10px 5px;
+}
+
+.eval-btn-div {
+    display: flex;
+    justify-content: center;
+    border: 1px solid salmon;
+    border-radius: 3px;
+    margin: 2px 0;
 }
