@@ -79,6 +79,9 @@ function wireUpButtons(){
         btn.classList.add('button');
         renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
+        renameBtn.addEventListener('click', ()=>{
+            renameButton(btn,btnData);
+        })
         whiteButtonsContainer.appendChild(btnsDiv);
     })
     blackButtons.forEach(btnData => {
@@ -93,6 +96,9 @@ function wireUpButtons(){
         btn.classList.add('button');
         renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
+        renameBtn.addEventListener('click', ()=>{
+            renameButton(btn,btnData);
+        })
         blackButtonsContainer.appendChild(btnsDiv);
     })
     sharedButtons.forEach(btnData => {
@@ -107,11 +113,20 @@ function wireUpButtons(){
         btn.classList.add('button');
         renameBtn.classList.add('button');
         btn.addEventListener('click', ()=>changeEval(btnData));
+        renameBtn.addEventListener('click', ()=>{
+            renameButton(btn,btnData);
+        })
         sharedButtonsContainer.appendChild(btnsDiv);
     })
 }
 
-
+function renameButton(btn, btnData) {
+    btnData.description = prompt(`Rename ${btnData.description} to:`);
+    btn.innerHTML = btnData.description;
+    if(eval === btnData.eval) {
+        currentEvalText = btnData.description;
+    }
+}
 
 function drawBar(elapsedMs){
 
@@ -150,7 +165,7 @@ function drawBar(elapsedMs){
 
 function drawText(dt)
 {
-    if(isTextScrolling && eval){
+    if(eval){
         let originX = 0;
         let originY = 0;
         let rotation = 0;
@@ -183,11 +198,12 @@ function drawText(dt)
 
 
 function changeEval(evalData) {
-    eval = evalData.eval;
-    currentEvalText = evalData.description;
-    targetBarHeight = barMiddleHeight - (barMiddleHeight * eval);
-    isTextScrolling = true;
-    textScrollX = 0;
+    if(evalData.eval !== eval){
+        eval = evalData.eval;
+        currentEvalText = evalData.description;
+        targetBarHeight = barMiddleHeight - (barMiddleHeight * eval);
+        textScrollX = 0;
+    }
 }
 
 wireUpButtons();
