@@ -1,15 +1,20 @@
 const canvas = document.getElementById('canvas1');
 canvas.height = window.innerHeight * .8;
-canvas.width = 50;
+canvas.width = 100;
 const ctx = canvas.getContext('2d');
 
 let eval = 0;
 let targetBarHeight;
 let barMiddleHeight = canvas.height / 2;
 let barHeight = 0;
+let barWidth = canvas.width * .45;
+let barX = (canvas.width - barWidth)/2;
 let barSpeed = 5;
 let prevTime;
 let floatHeight = 5;
+let isTextScrolling = false;
+let currentButton;
+let currentEvalText;
 
 const whiteButtonsContainer = document.getElementById('white-buttons-container');
 const blackButtonsContainer = document.getElementById('black-buttons-container');
@@ -64,7 +69,7 @@ function wireUpButtons(){
         let btn = document.createElement('button');
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
-        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        btn.addEventListener('click', ()=>changeEval(btnData));
         whiteButtonsContainer.appendChild(btn);
     })
     blackButtons.forEach(btnData => {
@@ -72,7 +77,7 @@ function wireUpButtons(){
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
 
-        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        btn.addEventListener('click', ()=>changeEval(btnData));
         blackButtonsContainer.appendChild(btn);
     })
     sharedButtons.forEach(btnData => {
@@ -80,7 +85,7 @@ function wireUpButtons(){
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
 
-        btn.addEventListener('click', ()=>changeEval(btnData.eval));
+        btn.addEventListener('click', ()=>changeEval(btnData));
         sharedButtonsContainer.appendChild(btn);
     })
 }
@@ -102,8 +107,10 @@ function drawBar(elapsedMs){
         barHeight = targetBarHeight + Math.sin(elapsedMs/500) * floatHeight;
     }
     ctx.clearRect(0,0, canvas.width,canvas.height);
+    ctx.fillStyle = 'white';
+    ctx.fillRect(barX,0,barWidth,canvas.height);
     ctx.fillStyle = 'black';
-    ctx.fillRect(0,0,canvas.width,barHeight);
+    ctx.fillRect(barX,0,barWidth,barHeight);
     ctx.beginPath();
     ctx.moveTo(0, barMiddleHeight);
     ctx.lineTo(canvas.width, barMiddleHeight);
@@ -115,11 +122,19 @@ function drawBar(elapsedMs){
 
 }
 
-function changeEval(newEval) {
-    eval = newEval;
+function drawText()
+{
+    
+}
+
+function changeEval(evalData) {
+    eval = evalData.eval;
+    currentEvalText = evalData.description;
     targetBarHeight = barMiddleHeight - (barMiddleHeight * eval);
+    isTextScrolling = true;
     drawBar();
+    drawText();
 }
 
 wireUpButtons();
-changeEval(0);
+changeEval(sharedButtons[0]);
