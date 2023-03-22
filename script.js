@@ -185,7 +185,7 @@ function drawText(dt)
         }
         else{
             let radians = ((drawX -  canvas.height) / canvas.height) * Math.PI;
-            textScrollX += maxSpeedThisFrame * .4 + (maxSpeedThisFrame * .6 * Math.abs(Math.cos(radians))) ; 
+            textScrollX += maxSpeedThisFrame * .2 + (maxSpeedThisFrame * .8 * Math.abs(Math.cos(radians))) ; 
             if(textScrollX > textEndX){
                 textScrollX = 0;
             }  
@@ -207,7 +207,7 @@ function drawText(dt)
         
         ctx.translate(originX, originY);
         ctx.rotate(rotation);
-        ctx.translate(-canvas.height/2, 0);
+        ctx.translate(-canvas.height * .6, 0);
         ctx.fillText(currentEvalText, drawX,0);
         ctx.restore();
     }
