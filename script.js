@@ -16,7 +16,7 @@ let isTextScrolling = false;
 let currentButton;
 let currentEvalText;
 let textScrollX = 0;
-let textSpeed = canvas.height * .8;
+let textSpeed = canvas.height * .7;
 let textEndX = canvas.height * 3;
 
 
@@ -176,15 +176,22 @@ function drawText(dt)
         let rotation = 0;
         let startX = -canvas.height;
 
+        let drawX = startX + textScrollX;
         let maxSpeedThisFrame = textSpeed * dt/1000;
-        let radians = ((textScrollX) / canvas.height/2) * Math.PI;
 
-        textScrollX += maxSpeedThisFrame * .2 + (maxSpeedThisFrame * .8 * Math.abs(Math.cos(radians))) ; 
-        if(textScrollX > textEndX){
-            textScrollX = 0;
-        }  
+        if(drawX < 0)
+        {
+            textScrollX += maxSpeedThisFrame;
+        }
+        else{
+            let radians = ((drawX -  canvas.height) / canvas.height) * Math.PI;
+            textScrollX += maxSpeedThisFrame * .4 + (maxSpeedThisFrame * .6 * Math.abs(Math.cos(radians))) ; 
+            if(textScrollX > textEndX){
+                textScrollX = 0;
+            }  
+        }
         ctx.save();
-        ctx.font = `${barX}px bold sans-serif`;
+        ctx.font = `${barX}px monospace`;
         if(eval > 0){
             ctx.fillStyle = 'white';
             originX = barX;
@@ -200,7 +207,8 @@ function drawText(dt)
         
         ctx.translate(originX, originY);
         ctx.rotate(rotation);
-        ctx.fillText(currentEvalText, startX + textScrollX,0);
+        ctx.translate(-canvas.height/2, 0);
+        ctx.fillText(currentEvalText, drawX,0);
         ctx.restore();
     }
 }
