@@ -3,7 +3,7 @@ canvas.height = window.innerHeight * .8;
 canvas.width = 100;
 const ctx = canvas.getContext('2d');
 
-let eval = 0;
+let eval;
 let targetBarHeight;
 let barMiddleHeight = canvas.height / 2;
 let barHeight = 0;
@@ -16,7 +16,9 @@ let isTextScrolling = false;
 let currentButton;
 let currentEvalText;
 let textScrollX = 0;
-let textSpeed = canvas.height/4;
+let textSpeed = canvas.height * .8;
+let textEndX = canvas.height * 3;
+
 
 const whiteButtonsContainer = document.getElementById('white-buttons-container');
 const blackButtonsContainer = document.getElementById('black-buttons-container');
@@ -170,8 +172,12 @@ function drawText(dt)
         let originY = 0;
         let rotation = 0;
         let startX = -canvas.height;
-        textScrollX += textSpeed * dt/1000; 
-        if(textScrollX > canvas.height * 2){
+
+        let maxSpeedThisFrame = textSpeed * dt/1000;
+        let radians = ((textScrollX) / canvas.height/2) * Math.PI;
+
+        textScrollX += maxSpeedThisFrame * .2 + (maxSpeedThisFrame * .8 * Math.abs(Math.cos(radians))) ; 
+        if(textScrollX > textEndX){
             textScrollX = 0;
         }  
         ctx.save();
