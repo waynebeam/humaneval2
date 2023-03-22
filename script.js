@@ -123,10 +123,13 @@ function wireUpButtons(){
 }
 
 function renameButton(btn, btnData) {
-    btnData.description = prompt(`Rename ${btnData.description} to:`);
-    btn.innerHTML = btnData.description;
-    if(eval === btnData.eval) {
-        currentEvalText = btnData.description;
+    const newName = prompt(`Rename ${btnData.description} to:`);
+    if(newName){
+        btnData.description = newName;
+        btn.innerHTML = btnData.description;
+        if(eval === btnData.eval) {
+            currentEvalText = btnData.description;
+        }
     }
 }
 
