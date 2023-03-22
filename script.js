@@ -18,6 +18,7 @@ let currentEvalText;
 let textScrollX = 0;
 let textSpeed = canvas.height * .7;
 let textEndX = canvas.height * 3;
+let highlightedBtn;
 
 
 const whiteButtonsContainer = document.getElementById('white-buttons-container');
@@ -80,7 +81,10 @@ function wireUpButtons(){
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
         renameBtn.classList.add('button');
-        btn.addEventListener('click', ()=>changeEval(btnData));
+        btn.addEventListener('click', ()=>{
+            changeEval(btnData);
+            styleButton(btn);
+        })
         renameBtn.addEventListener('click', ()=>{
             renameButton(btn,btnData);
         })
@@ -97,7 +101,10 @@ function wireUpButtons(){
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
         renameBtn.classList.add('button');
-        btn.addEventListener('click', ()=>changeEval(btnData));
+        btn.addEventListener('click', ()=>{
+            changeEval(btnData);
+            styleButton(btn);
+        })
         renameBtn.addEventListener('click', ()=>{
             renameButton(btn,btnData);
         })
@@ -114,12 +121,16 @@ function wireUpButtons(){
         btn.innerHTML = btnData.description;
         btn.classList.add('button');
         renameBtn.classList.add('button');
-        btn.addEventListener('click', ()=>changeEval(btnData));
+        btn.addEventListener('click', ()=>{
+            changeEval(btnData);
+            styleButton(btn);
+        })
         renameBtn.addEventListener('click', ()=>{
             renameButton(btn,btnData);
         })
         sharedButtonsContainer.appendChild(btnsDiv);
     })
+
 }
 
 function renameButton(btn, btnData) {
@@ -131,6 +142,14 @@ function renameButton(btn, btnData) {
             currentEvalText = btnData.description;
         }
     }
+}
+
+function styleButton(btn){
+    if(highlightedBtn){
+        highlightedBtn.classList.remove('accent-border');
+    }
+    highlightedBtn = btn;
+    btn.classList.add('accent-border');
 }
 
 function drawBar(elapsedMs){
@@ -157,7 +176,7 @@ function drawBar(elapsedMs){
     ctx.beginPath();
     ctx.moveTo(0, barMiddleHeight);
     ctx.lineTo(canvas.width, barMiddleHeight);
-    ctx.strokeStyle = 'salmon';
+    ctx.strokeStyle = accentColor;
     ctx.lineWidth = '5';
     ctx.stroke();
 
@@ -220,9 +239,13 @@ function changeEval(evalData) {
         currentEvalText = evalData.description;
         targetBarHeight = barMiddleHeight - (barMiddleHeight * eval);
         textScrollX = 0;
+
     }
 }
 
+let bodyStyles = window.getComputedStyle(document.body);
+let accentColor = bodyStyles.getPropertyValue('--accent-color');
 wireUpButtons();
 changeEval(sharedButtons[0]);
 drawBar();
+

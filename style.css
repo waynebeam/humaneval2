@@ -1,3 +1,11 @@
+:root{
+    --accent-color: salmon;
+}
+
+a {
+    text-decoration: none;
+}
+
 body {
     max-width: 600px;
     height: 100%;
@@ -20,8 +28,8 @@ body {
 }
 
 #canvas1 {
-    background: salmon;
-    border: 2px solid salmon;
+    background: var(--accent-color);
+    border: 2px solid var(--accent-color);
     border-radius: 5px;
 }
 
@@ -45,8 +53,26 @@ body {
     font-size: 1.4em;
     font-weight: bold;
     /* offset-x | offset-y | blur-radius | color */
-    box-shadow: 10px 10px 5px black;
+    box-shadow: 5px 5px 5px black;
     border: 3px solid black;
+    color:black;
+    transition: color 200ms ease-in;
+    position: relative;
+
+}
+
+.button:hover {
+    color: var(--accent-color);
+}
+
+.button:active {
+    box-shadow: none;
+    top: 5px;
+    left: 5px;
+}
+
+.accent-border {
+    border: 3px solid var(--accent-color);
 }
 
 .eval-btn-div {
